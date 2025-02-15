@@ -4,6 +4,7 @@
   >
     <div class="flex items-center gap-2">
       <span class="text-lg font-bold text-white">{{ user.fullName }}</span>
+
       <span
         class="text-sm text-black bg-opacity-20 bg-white px-2 py-1 rounded-full"
         v-if="user.role"
@@ -11,9 +12,14 @@
         {{ user.role === 'customer' ? 'Заказчик' : 'Исполнитель' }}
       </span>
     </div>
+    <span class="text-lg font-bold text-white self-center text-center"
+      >Информационная система обеспечения постановки и выполнения задач с
+      элементами социальной сети</span
+    >
     <button
       class="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-md active:scale-95 mr-4 cursor-pointer"
       @click="handleLogout"
+      v-if="user.role"
     >
       Выйти
     </button>
