@@ -1,8 +1,8 @@
 <template>
   <header
-    class="bg-gradient-to-r from-blue-600 to-indigo-700 py-4 px-6 flex justify-between items-center shadow-lg mb-8"
+    class="bg-gradient-to-r from-blue-600 to-indigo-700 py-4 px-4 flex justify-around items-center shadow-lg mb-8 header"
   >
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2" v-if="user.role">
       <span class="text-lg font-bold text-white">{{ user.fullName }}</span>
 
       <span
@@ -65,5 +65,9 @@ button:hover {
 /* Эффект при нажатии на кнопку */
 button:active {
   transform: scale(0.95);
+}
+
+.header {
+  padding-right: 16px;
 }
 </style>

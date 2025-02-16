@@ -72,7 +72,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-6 flex gap-2">
+        <div class="mt-6 flex gap-2" v-if="task.status !== 'Завершена'">
           <input
             v-model="newMessage"
             placeholder="Введите сообщение"
@@ -125,6 +125,19 @@
         >
           Вы уже выполняете задачу
         </div>
+      </div>
+
+      <!-- Кнопка "Закрыть задачу" для заказчика -->
+      <div
+        v-if="user.id === task.customer_id && task.status !== 'Завершена'"
+        class="p-6 border-t border-gray-200"
+      >
+        <button
+          @click="closeTask"
+          class="w-full px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all transform hover:scale-105"
+        >
+          Закрыть задачу
+        </button>
       </div>
     </div>
   </div>
@@ -342,6 +355,33 @@ const acceptTask = async () => {
       task.value.executor = user.value;
     } else {
       throw new Error('Ошибка при обновлении задачи');
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+};
+
+// Закрытие задачи
+const closeTask = async () => {
+  try {
+    const response = await fetch(
+      `https://9f51fbeefc3b53a7.mokky.dev/tasks/${task.value.id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          status: 'Завершена',
+        }),
+      }
+    );
+
+    if (response.ok) {
+      task.value.status = 'Завершена';
+    } else {
+      throw new Error('Ошибка при закрытии задачи');
     }
   } catch (error) {
     console.error('Ошибка:', error);
